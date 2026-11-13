@@ -1,28 +1,34 @@
-# Nisfii
-NISFFi – Plateforme e-commerce dédiée aux achats des articles en ligne, avec un espace d'administration pour la gestion des produits et des catégories.
+# NISFFi
 
-Elle permet aux utilisateurs de decouvrir des produits, de consulter leurs caracteristiques et leurs prix, de filtrer les articles par categories et marques et gerer le panier d'achat.
+## Présentation
 
+**NISFFi** est une plateforme e-commerce dédiée à la vente en ligne d'articles de mode, d'accessoires.
 
-# Technologies utilisees
+Elle permet aux utilisateurs de découvrir des produits, de consulter leurs caractéristiques et leurs prix, de filtrer les articles par catégories et marques, et de gérer leur panier d'achat.
 
-Frontend:
- 1 React.js
- 2 Javascript
- 3 Tailwind CSS
+La plateforme intègre également un espace d'administration permettant de gérer les produits et les catégories.
 
- Backend:
+## Technologies utilisées
 
-  1 Node.js
-  2 Express.js
-  3 PostgreSQL
+### Frontend
+- React.js
+- JavaScript
+- Tailwind CSS
 
-  # Fonctionnalites attendues
+### Backend
+- Node.js
+- Express.js
+- PostgreSQL
 
-  Consultation des articles
-  Filtrage des produits par categories et marques
-  Espace administration pour gerer les produits
+## Fonctionnalités
 
-  # Auteur 
+- Consultation des produits
+- Filtrage des produits par catégories et marques
+- Gestion du panier d'achat
+- Espace d'administration
+- Ajout, modification et suppression des produits
+- Gestion des catégories
 
- Projet développé dans le cadre d'un projet e-commerce : NISFFi.
+## Auteur
+
+Développé dans le cadre du projet e-commerce **NISFFi**.
