@@ -1,6 +1,7 @@
 import React from 'react'
 import { ArrowRight, LayoutGrid } from 'lucide-react'
 import { useCategories } from './DashboardAdmin/ContextCategory'
+import { API_ORIGIN } from "../services/api"
 
 const CategoryList = () => {
 
@@ -41,9 +42,9 @@ const CategoryList = () => {
 
               {item.image_url ? (
                 <img
-                  src={`http://localhost:3000${item.image_url}`}
-                  alt={item.nom}
-                  className="w-full h-full object-cover"
+                    src={`${API_ORIGIN}${item.image_url}`}
+                    alt={item.nom}
+                    className="w-full h-full object-cover"
                 />
               ) : (
                 <LayoutGrid size={35} className="text-[#A77C5C]" />

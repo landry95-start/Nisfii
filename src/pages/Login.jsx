@@ -5,7 +5,7 @@ import { useForm } from 'react-hook-form';
 import { Eye, EyeOff } from 'lucide-react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Link, useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import api from "../services/api";
 
 const schema = z.object({
     email: z.email("email invalide"),
@@ -35,8 +35,8 @@ const Login = () => {
             setPasswordError("");
             setLoading(true);
 
-            const response = await axios.post(
-                "http://localhost:3000/api/auth/login",
+            const response = await api.post(
+                "/auth/login",
                 data,
                 {
                     withCredentials: true

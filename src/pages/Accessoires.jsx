@@ -1,3 +1,4 @@
+
 import React, { useMemo, useState } from "react";
 import {
   Search,
@@ -10,13 +11,12 @@ import {
 import { useProducts } from "../component/DashboardAdmin/ContextProduct";
 import { useCart } from "../component/CartProvider";
 import { useNavigate } from "react-router-dom";
+import { API_ORIGIN } from "../services/api";
 
 const Accessoires = () => {
 
   const { products } = useProducts();
-
-  const {addCart} = useCart();
-
+  const { addCart } = useCart();
   const navigate = useNavigate();
 
   const [search, setSearch] = useState("");
@@ -27,19 +27,16 @@ const Accessoires = () => {
     (produit) => produit.univers === "Gadget"
   );
 
-  // Récupérer les catégories présentes dans les produits
   const categories = [
     "Toutes",
     ...new Set(produitsElectronique.map((p) => p.categorie_nom).filter(Boolean)),
   ];
 
-  // Récupérer les marques présentes dans les produits
   const brands = [
     "Toutes",
     ...new Set(produitsElectronique.map((p) => p.marque_nom).filter(Boolean)),
   ];
 
-  // Filtrer les produits
   const filteredProducts = useMemo(() => {
     return produitsElectronique.filter((product) => {
       const matchSearch =
@@ -60,7 +57,6 @@ const Accessoires = () => {
   return (
     <main className="min-h-screen bg-[#FCFAFB]">
 
-      {/* En-tête */}
       <section className="bg-[#46152F] text-white px-6 py-16 text-center">
         <p className="text-sm tracking-[4px] uppercase mb-3 text-[#E8B8CC]">
           Découvrez notre univers
@@ -76,10 +72,8 @@ const Accessoires = () => {
         </p>
       </section>
 
-     
       <section className="max-w-7xl mx-auto px-5 md:px-8 py-12">
 
-       
         <div className="flex flex-col lg:flex-row gap-4 justify-between mb-8">
 
           <div className="relative w-full lg:max-w-md">
@@ -126,7 +120,6 @@ const Accessoires = () => {
           </div>
         </div>
 
-
         <div className="flex items-center justify-between mb-6">
           <div>
             <h2 className="text-xl font-semibold text-[#46152F]">
@@ -141,7 +134,6 @@ const Accessoires = () => {
           <SlidersHorizontal className="text-[#46152F]" size={22} />
         </div>
 
-       
         {filteredProducts.length === 0 ? (
 
           <div className="bg-white border border-gray-100 rounded-2xl py-20 text-center">
@@ -176,114 +168,108 @@ const Accessoires = () => {
 
             {filteredProducts.map((product) => (
 
-            <article
-              key={product.id}
-              className="bg-white border border-[#EAE3DE] overflow-hidden group max-w-[190px] mx-auto w-full"
-              onClick={() => navigate("/details", {
-                    state: { article: product }
+              <article
+                key={product.id}
+                className="bg-white border border-[#EAE3DE] overflow-hidden group max-w-[190px] mx-auto w-full"
+                onClick={() => navigate("/details", {
+                  state: { article: product }
                 })}
-            >
+              >
 
-    
-        <div className="relative aspect-[4/3] bg-[#F3E9DF] overflow-hidden">
+                <div className="relative aspect-[4/3] bg-[#F3E9DF] overflow-hidden">
 
-          {product.image ? (
-            <img
-              src={`http://localhost:3000${product.image}`}
-              alt={product.nom}
-              className="w-full h-full object-cover group-hover:scale-105 transition duration-500"
-            />
-          ) : (
-            <div className="w-full h-full flex items-center justify-center text-gray-400">
-              Aucune image
-            </div>
-          )}
+                  {product.image ? (
+                    <img
+                      src={`${API_ORIGIN}${product.image}`}
+                      alt={product.nom}
+                      className="w-full h-full object-cover group-hover:scale-105 transition duration-500"
+                    />
+                  ) : (
+                    <div className="w-full h-full flex items-center justify-center text-gray-400">
+                      Aucune image
+                    </div>
+                  )}
 
-        
-          {product.ancien_prix && (
-            <span className="absolute top-3 left-3 bg-[#46152F] text-white text-[10px] px-2 py-1 uppercase">
-              Promo
-            </span>
-          )}
+                  {product.ancien_prix && (
+                    <span className="absolute top-3 left-3 bg-[#46152F] text-white text-[10px] px-2 py-1 uppercase">
+                      Promo
+                    </span>
+                  )}
 
-          
-          <button
-            type="button"
-            className="absolute top-3 right-3 w-9 h-9 rounded-full bg-white flex items-center justify-center shadow-sm hover:bg-[#46152F] hover:text-white transition"
-          >
-            <Heart size={19} strokeWidth={1.8} />
-          </button>
+                  <button
+                    type="button"
+                    className="absolute top-3 right-3 w-9 h-9 rounded-full bg-white flex items-center justify-center shadow-sm hover:bg-[#46152F] hover:text-white transition"
+                  >
+                    <Heart size={19} strokeWidth={1.8} />
+                  </button>
 
-        </div>
+                </div>
 
-        <div className="p-2">
+                <div className="p-2">
 
-          
-          <p className="text-[8px] uppercase tracking-wider text-[#64748B] mb-1">
-            {product.categorie_nom || "Sans catégorie"}
-          </p>
+                  <p className="text-[8px] uppercase tracking-wider text-[#64748B] mb-1">
+                    {product.categorie_nom || "Sans catégorie"}
+                  </p>
 
-        
-          <h3 className="text-xs font-medium text-gray-900 line-clamp-1">
-            {product.nom}
-          </h3>
+                  <h3 className="text-xs font-medium text-gray-900 line-clamp-1">
+                    {product.nom}
+                  </h3>
 
-          
-          <div className="flex items-center flex-wrap gap-2 mt-1">
+                  <div className="flex items-center flex-wrap gap-2 mt-1">
 
-            <span className="text-xs font-bold text-black">
-              {Number(product.prix).toLocaleString("fr-FR")} FCFA
-            </span>
+                    <span className="text-xs font-bold text-black">
+                      {Number(product.prix).toLocaleString("fr-FR")} FCFA
+                    </span>
 
-            {product.ancien_prix && (
-              <span className="text-xs text-gray-400 line-through">
-                {Number(product.ancien_prix).toLocaleString("fr-FR")} FCFA
-              </span>
-            )}
+                    {product.ancien_prix && (
+                      <span className="text-xs text-gray-400 line-through">
+                        {Number(product.ancien_prix).toLocaleString("fr-FR")} FCFA
+                      </span>
+                    )}
 
-          </div>
+                  </div>
 
-      
-        <div className="flex items-center justify-between mt-3">
+                  <div className="flex items-center justify-between mt-3">
 
-        
-          <div className="flex items-center gap-1 text-xs text-[#64748B]">
+                    <div className="flex items-center gap-1 text-xs text-[#64748B]">
 
-            {product.note && (
-              <>
-                <Star
-                  size={15}
-                  fill="#F5A623"
-                  stroke="#F5A623"
-                />
+                      {product.note && (
+                        <>
+                          <Star
+                            size={15}
+                            fill="#F5A623"
+                            stroke="#F5A623"
+                          />
 
-                <span>{product.note}</span>
+                          <span>{product.note}</span>
 
-                {product.nombre_avis && (
-                  <span>({product.nombre_avis})</span>
-                )}
-              </>
-            )}
+                          {product.nombre_avis && (
+                            <span>({product.nombre_avis})</span>
+                          )}
+                        </>
+                      )}
 
-          </div>
+                    </div>
 
-        {/* Bouton panier */}
-        <button
-          type="button"
-          title="Ajouter au panier"
-          className="w-7 h-7 rounded-full bg-[#171717] text-white flex items-center justify-center"
-          onClick={() => addCart({...product, quantity:1})}
-         >
-          <ShoppingCart size={17} />
-        </button>
+                    <button
+                      type="button"
+                      title="Ajouter au panier"
+                      className="w-7 h-7 rounded-full bg-[#171717] text-white flex items-center justify-center"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        addCart({ ...product, quantity: 1 });
+                      }}
+                    >
+                      <ShoppingCart size={17} />
+                    </button>
 
-      </div>
+                  </div>
 
-    </div>
+                </div>
 
-  </article>
+              </article>
 
-))}
+            ))}
           </div>
 
         )}

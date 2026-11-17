@@ -1,5 +1,5 @@
 import React, {useState, useContext, createContext, useEffect} from 'react'
-import axios from 'axios';
+import api from "../../services/api"
 
 const CategoryContext = createContext();
 
@@ -10,7 +10,7 @@ const ContextCategory = ({children}) => {
 
     const getCategories = async () => {
         try {
-            const response = await axios.get("http://localhost:3000/api/category");
+            const response = await api.get("/category");
             setCategories(response.data.categories);
         }
         catch (error) {
@@ -30,7 +30,7 @@ const ContextCategory = ({children}) => {
 
     const deleteCategory = async (id) => {
         try {
-            const response = await axios.delete(`http://localhost:3000/api/category/${id}`);
+            const response = await api.delete(`/category/${id}`);
             setCategories((currentCategory) => {
                 return currentCategory.filter((category) => category.id !== id);
             })

@@ -35,7 +35,7 @@ export default function IntroPage() {
           transition={{ duration: 1, delay: 0.8 }}
           className="font-['Playfair_Display'] text-6xl font-semibold tracking-wide text-[#211B18] md:text-8xl"
         >
-          Anastelle
+          NISFI
         </motion.h1>
 
 

@@ -6,7 +6,7 @@ import React, {
   useState
 } from "react";
 
-import axios from "axios";
+import api from "../../services/api";
 
 const ProductContext = createContext();
 
@@ -21,8 +21,8 @@ export default function ContextProduct({ children }) {
       setLoading(true);
       setError(null);
 
-      const response = await axios.get(
-        "http://localhost:3000/api/product"
+      const response = await api.get(
+        "/product"
       );
 
       setProducts(response.data.produits || []);
@@ -66,8 +66,8 @@ export default function ContextProduct({ children }) {
         formData.append("image", productData.image);
       }
 
-      const response = await axios.post(
-        "http://localhost:3000/api/product",
+      const response = await api.post(
+        "/product",
         formData
       );
 
@@ -88,8 +88,8 @@ export default function ContextProduct({ children }) {
 
   const deleteProduct = async (id) => {
     try {
-      const response = await axios.delete(
-        `http://localhost:3000/api/product/${id}`
+      const response = await api.delete(
+        `/product/${id}`
       );
 
       setProducts((currentProducts) =>

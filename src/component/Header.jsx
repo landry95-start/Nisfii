@@ -80,7 +80,7 @@ const Header = () => {
 
             <div>
               <h3 className="text-xl md:text-2xl font-semibold tracking-wide">
-                NISFFi
+                NISFi
               </h3>
 
               <p className="text-[8px] md:text-[9px] tracking-[2px]">

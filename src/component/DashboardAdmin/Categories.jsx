@@ -4,7 +4,7 @@ import { LayoutGrid, Plus, Pencil, Trash2 } from 'lucide-react';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
-import axios from 'axios';
+import api, { API_ORIGIN } from "../../services/api";
 import { useCategories } from './ContextCategory';
 
 const Categories = () => {
@@ -43,67 +43,62 @@ const Categories = () => {
         resolver: zodResolver(schema)
     });
 
-    async function handleSave(data) {
+    
+async function handleSave(data) {
+    if (!isEditing && (!data.image || data.image.length === 0)) {
+        alert("L'image est obligatoire");
+        return;
+    }
 
-        if (!isEditing && (!data.image || data.image.length === 0)) {
-            alert("L'image est obligatoire");
-            return;
+    try {
+        const formData = new FormData();
+
+        formData.append("nom", data.nom);
+        formData.append("slug", data.slug);
+        formData.append("description", data.description);
+        formData.append("ordre", data.ordre);
+
+        if (data.image?.length > 0) {
+            formData.append("image", data.image[0]);
         }
 
-        try {
+        let response;
 
-            const formData = new FormData();
-
-            formData.append("nom", data.nom);
-            formData.append("slug", data.slug);
-            formData.append("description", data.description);
-            formData.append("ordre", data.ordre);
-
-            if (data.image?.length > 0) {
-                formData.append("image", data.image[0]);
-            }
-
-            let response;
-
-            if (isEditing) {
-
-                response = await axios.put(
-                    `http://localhost:3000/api/category/${selectedCategory.id}`,
-                    formData
-                );
-
-                updateCategory(response.data.categorie);
-
-            } else {
-
-                response = await axios.post(
-                    "http://localhost:3000/api/category",
-                    formData
-                );
-
-                addCategory(response.data.categorie);
-            }
-
-            setIsEditing(false);
-            setSelectedCategory(null);
-
-            reset({
-                nom: "",
-                slug: "",
-                description: "",
-                ordre: "",
-                image: undefined
-            });
-
-        } catch (error) {
-
-            console.error(
-                "Erreur :",
-                error.response?.data?.message || error.message
+        if (isEditing) {
+            response = await api.put(
+                `/category/${selectedCategory.id}`,
+                formData
             );
 
+            updateCategory(response.data.categorie);
+        } else {
+            response = await api.post(
+                "/category",
+                formData
+            );
+
+            addCategory(response.data.categorie);
         }
+
+        setIsEditing(false);
+        setSelectedCategory(null);
+
+        reset({
+            nom: "",
+            slug: "",
+            description: "",
+            ordre: "",
+            image: undefined
+        });
+
+    } catch (error) {
+        console.error(
+            "Erreur :",
+            error.response?.data?.message || error.message
+        );
     }
+}
+
 
     function handleEdit(categorie) {
 
@@ -300,7 +295,7 @@ const Categories = () => {
 
                                     {categorie.image_url ? (
                                         <img
-                                            src={`http://localhost:3000${categorie.image_url}`}
+                                            src={`${API_ORIGIN}${categorie.image_url}`}
                                             alt={categorie.nom}
                                             className="w-full h-full object-cover"
                                         />

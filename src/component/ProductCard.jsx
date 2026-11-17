@@ -1,8 +1,10 @@
+
 import React from 'react'
 import { Star, ShoppingCart, ArrowRight, Heart } from 'lucide-react'
 import { useProducts } from './DashboardAdmin/ContextProduct';
 import { useCart } from './CartProvider';
 import { useNavigate } from 'react-router-dom';
+import { API_ORIGIN } from "../services/api";
 
 const ProductCard = () => {
 
@@ -13,7 +15,6 @@ const ProductCard = () => {
     return (
         <section className='px-4 sm:px-6 lg:px-8 py-8 bg-[#FFF1F2]'>
 
-            {/* En-tête */}
             <div className='flex justify-between items-center gap-3'>
                 <div>
                     <h3 className='font-bold text-xl'>Produits populaire</h3>
@@ -28,10 +29,8 @@ const ProductCard = () => {
                 </button>
             </div>
 
-           
             <div className='flex flex-col lg:flex-row gap-6 mt-10'>
 
-                
                 <div className='grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:flex lg:flex-1 gap-3'>
 
                     {products.slice(0, 5).map((product) => (
@@ -48,7 +47,7 @@ const ProductCard = () => {
 
                                 {product.image ? (
                                     <img
-                                        src={`http://localhost:3000${product.image}`}
+                                        src={`${API_ORIGIN}${product.image}`}
                                         alt={product.nom}
                                         className="w-full h-full object-cover group-hover:scale-105 transition duration-500"
                                     />
@@ -123,7 +122,10 @@ const ProductCard = () => {
                                         type="button"
                                         title="Ajouter au panier"
                                         className="w-7 h-7 rounded-full bg-[#171717] text-white flex items-center justify-center"
-                                        onClick={() => addCart({ ...product, quantity: 1 })}
+                                        onClick={(e) => {
+                                            e.stopPropagation()
+                                            addCart({ ...product, quantity: 1 })
+                                        }}
                                     >
                                         <ShoppingCart size={17} />
                                     </button>
@@ -137,7 +139,6 @@ const ProductCard = () => {
 
                 </div>
 
-                
                 <div className='relative rounded-xl bg-red-800 w-full h-48 sm:h-56 lg:w-[20%] lg:h-auto overflow-hidden'>
 
                     <img
@@ -154,4 +155,4 @@ const ProductCard = () => {
     )
 }
 
-export default ProductCard
+export default ProductCard;

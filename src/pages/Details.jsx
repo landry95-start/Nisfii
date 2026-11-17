@@ -15,8 +15,7 @@ import {
 
 import { FaWhatsapp } from "react-icons/fa";
 import { useCart } from "../component/CartProvider";
-
-const API_URL = "http://localhost:3000";
+import { API_ORIGIN } from "../services/api";
 
 const Details = () => {
 
@@ -84,7 +83,7 @@ const Details = () => {
             return imagePath;
         }
 
-        return `${API_URL}${imagePath}`;
+        return `${API_ORIGIN}${imagePath}`;
     };
 
     // Construire la galerie
@@ -484,3 +483,4 @@ Total : ${Number(prix) * quantity} FCFA
 };
 
 export default Details;
+

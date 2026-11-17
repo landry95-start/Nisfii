@@ -11,7 +11,7 @@ import productRouter from "./Routes/Products.js";
 const app = express();
 
 app.use(cors({
-    origin: "http://localhost:5173",
+    origin: process.env.FRONTEND_URL || "http://localhost:5173",
     credentials: true,
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"]
@@ -29,6 +29,8 @@ app.use("/api/auth", authRouteur);
 app.use("/api/category", categoryRouter);
 app.use("/api/product", productRouter);
 
-app.listen(3000, () => {
-    console.log("Serveur lancé avec succès sur le port 3000");
+const PORT = process.env.PORT || 3000;
+
+app.listen(PORT, () => {
+    console.log(`Serveur lancé avec succès sur le port ${PORT}`);
 });
